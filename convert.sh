@@ -8,7 +8,8 @@ homedir=$HOME
 outputdir=$homedir/Downloads
 
 # Check if Node is installed
-if ![[type node > /dev/null 2>&1 && which node > /dev/null 2>&1]] ;then
+if ! type node > /dev/null 2>&1 && which node > /dev/null 2>&1
+then
   echo "install node"
   # Download and install nvm:
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
@@ -20,8 +21,15 @@ if ![[type node > /dev/null 2>&1 && which node > /dev/null 2>&1]] ;then
   node -v # Should print "v24.12.0".
   # Verify npm version:
   npm -v # Should print "11.6.2".
+fi
+
+# Check if CLoudconvert CLI is installed
+if ! command -v cloudconvert > /dev/null 2>&1 ;
+then
   # Install cloudconvert CLI
   npm install -g cloudconvert-cli
 fi
+
 echo "converting $file"
 cloudconvert convert --overwrite --outputdir $outputdir -f gif -p.width=540 -p.heigth=960 -p.fps=24 $file
+
